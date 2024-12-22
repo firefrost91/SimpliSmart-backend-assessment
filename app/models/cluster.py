@@ -1,5 +1,7 @@
 from sqlalchemy import Column, Integer, String, Float, ForeignKey
 from sqlalchemy.orm import relationship
+from app.models.organization import Organization
+from app.models.deployment import Deployment
 from app.db.base_class import Base
 
 class Cluster(Base):

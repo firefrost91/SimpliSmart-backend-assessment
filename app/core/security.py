@@ -8,7 +8,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     Example:
     return pwd_context.verify(plain_password, hashed_password)
     """
-    pass
+    return pwd_context.verify(plain_password, hashed_password)
 
 def get_password_hash(password: str) -> str:
     """
@@ -16,4 +16,5 @@ def get_password_hash(password: str) -> str:
     Example:
     return pwd_context.hash(password)
     """
-    pass
+    return pwd_context.hash(password)
+

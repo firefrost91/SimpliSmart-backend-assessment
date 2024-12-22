@@ -7,19 +7,19 @@ class Settings(BaseSettings):
     
     # Database configuration
     POSTGRES_SERVER: str = os.getenv("PGHOST", "localhost")
-    POSTGRES_USER: str = os.getenv("PGUSER", "postgres")
-    POSTGRES_PASSWORD: str = os.getenv("PGPASSWORD", "")
-    POSTGRES_DB: str = os.getenv("PGDATABASE", "cluster_management")
+    POSTGRES_USER: str = os.getenv("PGUSER", "ansh")
+    POSTGRES_PASSWORD: str = os.getenv("PGPASSWORD", "password")
+    POSTGRES_DB: str = os.getenv("PGDATABASE", "test_db")
     POSTGRES_PORT: str = os.getenv("PGPORT", "5432")
     
     # Session configuration
     SECRET_KEY: str = "TODO_CHANGE_THIS_SECRET_KEY"  # TODO: Change in production
-    SESSION_COOKIE_NAME: str = "session"
+    SESSION_COOKIE_NAME: str = "this-session"
     SESSION_MAX_AGE: int = 1800  # 30 minutes in seconds
     
     # Database URL
     DATABASE_URL: str = os.getenv(
-        "DATABASE_URL",
+        "postgresql://ansh:password@localhost:5432/test_db",
         f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
     )
 
