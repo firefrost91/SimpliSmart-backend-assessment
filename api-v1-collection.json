@@ -210,8 +210,8 @@
 						"type": "text"
 					},
 					{
-						"key": "Cookie",
-						"value": "this-session=eyJ1c2VyX2lkIjogMTh9.Z2ekTw.AGU0bSuRU4h47AAyjfsSe5ujneg; path=/; Max-Age=1800; httponly; samesite=lax",
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBbnNodW1hbiIsImV4cCI6MTczNDkwNjM5NH0.W4UUvL99CVAjhCXEEMiPDh3aHZOxa73zDnlJmBSHcas",
 						"type": "text"
 					}
 				],
@@ -298,22 +298,13 @@
 						"type": "text"
 					},
 					{
-						"key": "Cookie",
-						"value": "this-session=eyJ1c2VyX2lkIjogMTh9.Z2ekTw.AGU0bSuRU4h47AAyjfsSe5ujneg; path=/; Max-Age=1800; httponly; samesite=lax",
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBbnNodW1hbiIsImV4cCI6MTczNDkwNjM5NH0.W4UUvL99CVAjhCXEEMiPDh3aHZOxa73zDnlJmBSHcas",
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"name\": \"New Organization 2\",\n  \"description\": \"This is a description for the new organization.\"\n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
-					"raw": "http://localhost:8000/api/v1/organizations/",
+					"raw": "http://localhost:8000/api/v1/organizations/BW76KSRJ/join",
 					"protocol": "http",
 					"host": [
 						"localhost"
@@ -323,7 +314,8 @@
 						"api",
 						"v1",
 						"organizations",
-						""
+						"BW76KSRJ",
+						"join"
 					]
 				}
 			},
@@ -474,14 +466,14 @@
 						"type": "text"
 					},
 					{
-						"key": "Cookie",
-						"value": "this-session=eyJ1c2VyX2lkIjogMTh9.Z2ekTw.AGU0bSuRU4h47AAyjfsSe5ujneg; path=/; Max-Age=1800; httponly; samesite=lax",
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBbnNodW1hbiIsImV4cCI6MTczNDkwNjM5NH0.W4UUvL99CVAjhCXEEMiPDh3aHZOxa73zDnlJmBSHcas",
 						"type": "text"
 					}
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\n  \"name\": \"My New Deployment\",\n  \"docker_image\": \"mydocker/image:v1\",\n  \"cpu_required\": 2.0,\n  \"ram_required\": 8.0,\n  \"gpu_required\": 1.0,\n  \"priority\": 1,\n  \"cluster_id\": 2\n}\n",
+					"raw": "{\n  \"name\": \"Test limits high 3\",\n  \"docker_image\": \"mydocker/image:v1\",\n  \"cpu_required\": 8.0,\n  \"ram_required\": 32.0,\n  \"gpu_required\": 4.0,\n  \"priority\": 1,\n  \"cluster_id\": 12\n}\n",
 					"options": {
 						"raw": {
 							"language": "json"
@@ -554,7 +546,7 @@
 		{
 			"name": "List Deployments",
 			"request": {
-				"method": "POST",
+				"method": "GET",
 				"header": [
 					{
 						"key": "Content-Type",
@@ -562,20 +554,11 @@
 						"type": "text"
 					},
 					{
-						"key": "Cookie",
-						"value": "this-session=eyJ1c2VyX2lkIjogMTh9.Z2ekTw.AGU0bSuRU4h47AAyjfsSe5ujneg; path=/; Max-Age=1800; httponly; samesite=lax",
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBbnNodW1hbiIsImV4cCI6MTczNDkwNjM5NH0.W4UUvL99CVAjhCXEEMiPDh3aHZOxa73zDnlJmBSHcas",
 						"type": "text"
 					}
 				],
-				"body": {
-					"mode": "raw",
-					"raw": "{\n  \"name\": \"My New Deployment\",\n  \"docker_image\": \"mydocker/image:v1\",\n  \"cpu_required\": 2.0,\n  \"ram_required\": 8.0,\n  \"gpu_required\": 1.0,\n  \"priority\": 1,\n  \"cluster_id\": 2\n}\n",
-					"options": {
-						"raw": {
-							"language": "json"
-						}
-					}
-				},
 				"url": {
 					"raw": "http://localhost:8000/api/v1/deployments/",
 					"protocol": "http",
@@ -653,8 +636,8 @@
 						"type": "text"
 					},
 					{
-						"key": "Cookie",
-						"value": "this-session=eyJ1c2VyX2lkIjogMTh9.Z2ekTw.AGU0bSuRU4h47AAyjfsSe5ujneg; path=/; Max-Age=1800; httponly; samesite=lax",
+						"key": "Authorization",
+						"value": "Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiJBbnNodW1hbiIsImV4cCI6MTczNDkwNjM5NH0.W4UUvL99CVAjhCXEEMiPDh3aHZOxa73zDnlJmBSHcas",
 						"type": "text"
 					}
 				],
