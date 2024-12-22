@@ -6,23 +6,23 @@ This is a FastAPI-based technical assessment designed to evaluate backend system
 ## Assessment Tasks
 
 ### 1. User Authentication and Organization Management
-- [ ] Implement session-based user authentication (login/logout)
-- [ ] Complete user registration with password hashing
-- [ ] Add organization creation with random invite codes
-- [ ] Implement organization joining via invite codes
+- [x] Implement session-based user authentication (login/logout)
+- [x] Complete user registration with password hashing
+- [x] Add organization creation with random invite codes
+- [x] Implement organization joining via invite codes
 
 ### 2. Cluster Management
-- [ ] Create clusters with resource limits (CPU, RAM, GPU)
-- [ ] Implement resource tracking and availability
-- [ ] Add cluster listing for organization members
-- [ ] Validate resource constraints
+- [x] Create clusters with resource limits (CPU, RAM, GPU)
+- [x] Implement resource tracking and availability
+- [x] Add cluster listing for organization members
+- [x] Validate resource constraints
 
 ### 3. Deployment Management
-- [ ] Develop a preemption-based scheduling algorithm to prioritize high-priority deployments
-- [ ] Create deployment endpoints with resource requirements
-- [ ] Implement basic scheduling algorithm
-- [ ] Add deployment status tracking
-- [ ] Handle resource allocation/deallocation
+- [x] Develop a preemption-based scheduling algorithm to prioritize high-priority deployments
+- [x] Create deployment endpoints with resource requirements
+- [x] Implement basic scheduling algorithm
+- [x] Add deployment status tracking
+- [x] Handle resource allocation/deallocation
 
 ### 4. Advanced Features (Optional)
 - [ ] Add support for deployment dependency management (e.g., Deployment A must complete before Deployment B starts)
