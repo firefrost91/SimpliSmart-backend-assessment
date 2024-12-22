@@ -83,3 +83,5 @@ uvicorn app.main:app --host 0.0.0.0 --port 8000 --reload
 
 ### 7. You are ready to go!
 Try hitting the APIs using the Postman collection (apis-v1-collection.json) or any other API client of your choice.
+
+Note: Make sure to use JWT authentication tokens while hitting protected endpoints on Postman
