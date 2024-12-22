@@ -6,7 +6,7 @@ This is a FastAPI-based technical assessment designed to evaluate backend system
 ## Assessment Tasks
 
 ### 1. User Authentication and Organization Management
-- [ ] Implement session-based user authentication (login/logout)
+- [x] Implement session-based user authentication (login/logout)
 - [ ] Complete user registration with password hashing
 - [ ] Add organization creation with random invite codes
 - [ ] Implement organization joining via invite codes
