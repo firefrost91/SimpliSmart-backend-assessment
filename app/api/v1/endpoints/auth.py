@@ -4,6 +4,11 @@ from app.core import deps, security
 from app.schemas.user import UserCreate, User
 from app.models.user import User as UserModel
 from fastapi.responses import JSONResponse
+from app.core.config import ACCESS_TOKEN_EXPIRE_MINUTES
+from app.utils.jwt_utils import create_access_token
+from datetime import timedelta
+
+
 
 router = APIRouter()
 
@@ -20,27 +25,25 @@ async def login(
     """
     # Find the user by username
     user = db.query(UserModel).filter(UserModel.username == username).first()
-    print(user, "USER")
-
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid username or password"
         )
-
     # Verify the password
     if not security.verify_password(password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid username or password"
         )
-
     # Set user_id in session
     request.session["user_id"] = user.id
-
+    # Create JWT token
+    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
+    access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
     # Return success message
     return JSONResponse(
-        content={"message": "Successfully logged in"},
+        content={"message": "Successfully logged in", "access_token": access_token, "token_type": "bearer"},
         status_code=status.HTTP_200_OK
     )
 

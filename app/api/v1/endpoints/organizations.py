@@ -55,7 +55,6 @@ def create_organization(
     print(current_user, "CURRENT")
     print(organization_in, "ORG")
     invite_code = generate_unique_invite_code(db)
-    print("INVITE", invite_code)
     if current_user.organization_id:
         raise HTTPException(
             status_code=400,
