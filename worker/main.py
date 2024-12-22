@@ -7,12 +7,13 @@ from app.scheduler.scheduler import Scheduler
 from app.models.deployment import DeploymentStatus
 
 # Configure logging
-logging.basicConfig(level=logging.INFO)
+logging.basicConfig()
 logger = logging.getLogger(__name__)
 
 def process_deployment(ch, method, properties, body):
     """Process deployment messages"""
     try:
+        print("NEW DEPLOYMENT")
         data = json.loads(body)
         with Session(engine) as db:
             scheduler = Scheduler(db)
@@ -41,7 +42,7 @@ def main():
 
     # Start consuming from priority queues
     try:
-        consumer.start_consuming('deployment_queue', consumer.process_deployment)
+        consumer.start_consuming()
     except KeyboardInterrupt:
         logger.info(" [*] Stopping worker...")
 

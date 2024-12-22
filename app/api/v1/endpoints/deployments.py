@@ -33,19 +33,23 @@ def create_deployment(
             status_code=403,
             detail="User does not have permission to create a deployment in this cluster"
         )
+    if cluster.cpu_limit < deployment_in.cpu_required:
+        raise HTTPException(
+            status_code=400,
+            detail="Insufficient CPU resources in the cluster"
+        )
+    if cluster.ram_limit < deployment_in.ram_required:
+        raise HTTPException(
+            status_code=400,
+            detail="Insufficient RAM resources in the cluster"
+        )
+    if cluster.gpu_limit < deployment_in.gpu_required:
+        raise HTTPException(
+            status_code=400,
+            detail="Insufficient GPU resources in the cluster"
+        )
 
-    # Validate cluster resource availability
-    if deployment_in.cpu_required > cluster.cpu_available:
-        raise HTTPException(status_code=400, detail="Insufficient CPU resources in the cluster")
-    if deployment_in.ram_required > cluster.ram_available:
-        raise HTTPException(status_code=400, detail="Insufficient RAM resources in the cluster")
-    if deployment_in.gpu_required > cluster.gpu_available:
-        raise HTTPException(status_code=400, detail="Insufficient GPU resources in the cluster")
-
-    # Deduct resources from the cluster
-    cluster.cpu_available -= deployment_in.cpu_required
-    cluster.ram_available -= deployment_in.ram_required
-    cluster.gpu_available -= deployment_in.gpu_required
+    db.commit()
 
     # Create the deployment record
     deployment = DBDeployment(
