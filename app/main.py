@@ -1,13 +1,13 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from starlette.middleware.sessions import SessionMiddleware
 from sqlalchemy import create_engine
+from sqlalchemy.orm import Session
+from starlette.middleware.sessions import SessionMiddleware
+
 from app.api.v1.api import api_router
 from app.core.config import settings
 from app.db.base import Base
-from app.db.session import engine
-from sqlalchemy.orm import Session
-from app.db.session import SessionLocal
+from app.db.session import SessionLocal, engine
 from app.models.user import User
 
 # Create database tables
@@ -55,23 +55,23 @@ app = FastAPI(
     openapi_tags=[
         {
             "name": "authentication",
-            "description": "Operations with user authentication. Register new users and login."
+            "description": "Operations with user authentication. Register new users and login.",
         },
         {
             "name": "organizations",
-            "description": "Manage organizations and handle user invitations."
+            "description": "Manage organizations and handle user invitations.",
         },
         {
             "name": "clusters",
-            "description": "Create and manage compute clusters with resource tracking."
+            "description": "Create and manage compute clusters with resource tracking.",
         },
         {
             "name": "deployments",
-            "description": "Schedule and manage deployments with priority-based queuing."
-        }
+            "description": "Schedule and manage deployments with priority-based queuing.",
+        },
     ],
     docs_url="/docs",
-    redoc_url="/redoc"
+    redoc_url="/redoc",
 )
 
 # Configure CORS and Session
@@ -87,19 +87,19 @@ app.add_middleware(
     SessionMiddleware,
     secret_key=settings.SECRET_KEY,
     session_cookie=settings.SESSION_COOKIE_NAME,
-    max_age=settings.SESSION_MAX_AGE
+    max_age=settings.SESSION_MAX_AGE,
 )
 
 # Include API router
 app.include_router(api_router, prefix="/api/v1")
+
 
 @app.get("/health")
 async def health_check():
     return {"status": "healthy"}
 
 
-
-
 if __name__ == "__main__":
     import uvicorn
+
     uvicorn.run(app, host="0.0.0.0", port=8000)

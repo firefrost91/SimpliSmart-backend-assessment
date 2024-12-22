@@ -1,6 +1,9 @@
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel
+
 from app.models.deployment import DeploymentStatus
+
 
 class DeploymentBase(BaseModel):
     name: str
@@ -10,11 +13,14 @@ class DeploymentBase(BaseModel):
     gpu_required: float
     priority: int = 0
 
+
 class DeploymentCreate(DeploymentBase):
     cluster_id: int
 
+
 class DeploymentUpdate(DeploymentBase):
     pass
+
 
 class Deployment(DeploymentBase):
     id: int

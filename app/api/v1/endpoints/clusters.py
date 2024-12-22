@@ -1,20 +1,22 @@
+from typing import List
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from typing import List
+
 from app.core import deps
-from app.schemas.cluster import Cluster, ClusterCreate
 from app.models.cluster import Cluster as DBCluster
 from app.models.user import User
+from app.schemas.cluster import Cluster, ClusterCreate
 
 router = APIRouter()
 
 
 @router.post("/", response_model=Cluster)
 def create_cluster(
-        *,
-        db: Session = Depends(deps.get_db),
-        cluster_in: ClusterCreate,
-        current_user: User = Depends(deps.get_current_user)
+    *,
+    db: Session = Depends(deps.get_db),
+    cluster_in: ClusterCreate,
+    current_user: User = Depends(deps.get_current_user),
 ):
     """
     Create a new cluster.
@@ -23,7 +25,7 @@ def create_cluster(
     if current_user.organization_id is not cluster_in.organization_id:
         raise HTTPException(
             status_code=400,
-            detail="User not allowed to create a cluster in this organization"
+            detail="User not allowed to create a cluster in this organization",
         )
     # Create the cluster in the database
     cluster = DBCluster(
@@ -34,7 +36,7 @@ def create_cluster(
         organization_id=cluster_in.organization_id,
         cpu_available=cluster_in.cpu_limit,  # Assuming available resources are the same as limits
         ram_available=cluster_in.ram_limit,
-        gpu_available=cluster_in.gpu_limit
+        gpu_available=cluster_in.gpu_limit,
     )
 
     db.add(cluster)
@@ -47,11 +49,16 @@ def create_cluster(
 @router.get("/", response_model=List[Cluster])
 def list_clusters(
     db: Session = Depends(deps.get_db),
-    current_user: User = Depends(deps.get_current_user)
+    current_user: User = Depends(deps.get_current_user),
 ):
-    clusters = db.query(DBCluster).filter(DBCluster.organization_id == current_user.organization_id).all()
+    clusters = (
+        db.query(DBCluster)
+        .filter(DBCluster.organization_id == current_user.organization_id)
+        .all()
+    )
     if not clusters:
-        raise HTTPException(status_code=404, detail="No clusters found for this organization")
+        raise HTTPException(
+            status_code=404, detail="No clusters found for this organization"
+        )
 
     return clusters
-

@@ -1,6 +1,9 @@
-import jwt  # This must be PyJWT
 from datetime import datetime, timedelta
-from app.core.config import SECRET_KEY, ALGORITHM
+
+import jwt  # This must be PyJWT
+
+from app.core.config import ALGORITHM, SECRET_KEY
+
 
 def create_access_token(data: dict, expires_delta: timedelta = None):
     """
@@ -14,6 +17,7 @@ def create_access_token(data: dict, expires_delta: timedelta = None):
     to_encode.update({"exp": expire})
     encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
     return encoded_jwt
+
 
 def verify_access_token(token: str):
     """

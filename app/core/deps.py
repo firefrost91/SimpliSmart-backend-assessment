@@ -1,10 +1,13 @@
 from typing import Generator, Optional
-from fastapi import Depends, HTTPException, status, Request
-from sqlalchemy.orm import Session
-from app.db.session import SessionLocal
+
 import jwt  # PyJWT
-from app.core.config import SECRET_KEY, ALGORITHM
+from fastapi import Depends, HTTPException, Request, status
+from sqlalchemy.orm import Session
+
+from app.core.config import ALGORITHM, SECRET_KEY
+from app.db.session import SessionLocal
 from app.models.user import User
+
 
 def get_db() -> Generator:
     db = SessionLocal()
@@ -14,10 +17,7 @@ def get_db() -> Generator:
         db.close()
 
 
-def get_current_user(
-        request: Request,
-        db: Session = Depends(get_db)
-) -> Optional[User]:
+def get_current_user(request: Request, db: Session = Depends(get_db)) -> Optional[User]:
     """
     Validate the current user from the JWT token in the Authorization header.
 
@@ -28,8 +28,7 @@ def get_current_user(
     auth_header = request.headers.get("Authorization")
     if not auth_header:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Not authenticated"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Not authenticated"
         )
 
     token = auth_header.split(" ")[1]  # Expecting format: "Bearer <token>"
@@ -41,8 +40,7 @@ def get_current_user(
 
         if not username:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="Invalid token"
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
             )
 
         # Fetch the user from the database using the decoded username
@@ -50,20 +48,16 @@ def get_current_user(
 
         if not user:
             raise HTTPException(
-                status_code=status.HTTP_401_UNAUTHORIZED,
-                detail="User not found"
+                status_code=status.HTTP_401_UNAUTHORIZED, detail="User not found"
             )
 
         return user
 
     except jwt.ExpiredSignatureError:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Token has expired"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Token has expired"
         )
     except jwt.InvalidTokenError:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid token"
+            status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid token"
         )
-

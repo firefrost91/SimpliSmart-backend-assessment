@@ -1,5 +1,7 @@
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel
+
 
 class OrganizationBase(BaseModel):
     name: str
@@ -9,8 +11,10 @@ class OrganizationBase(BaseModel):
 class OrganizationCreate(OrganizationBase):
     pass
 
+
 class OrganizationUpdate(OrganizationBase):
     pass
+
 
 class Organization(OrganizationBase):
     id: int

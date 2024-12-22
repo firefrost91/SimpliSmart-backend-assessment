@@ -1,24 +1,26 @@
-from fastapi import APIRouter, Depends, HTTPException, status, Response, Request
-from sqlalchemy.orm import Session
-from app.core import deps, security
-from app.schemas.user import UserCreate, User
-from app.models.user import User as UserModel
-from fastapi.responses import JSONResponse
-from app.core.config import ACCESS_TOKEN_EXPIRE_MINUTES
-from app.utils.jwt_utils import create_access_token
 from datetime import timedelta
 
+from fastapi import (APIRouter, Depends, HTTPException, Request, Response,
+                     status)
+from fastapi.responses import JSONResponse
+from sqlalchemy.orm import Session
 
+from app.core import deps, security
+from app.core.config import ACCESS_TOKEN_EXPIRE_MINUTES
+from app.models.user import User as UserModel
+from app.schemas.user import User, UserCreate
+from app.utils.jwt_utils import create_access_token
 
 router = APIRouter()
 
+
 @router.post("/login")
 async def login(
-        request: Request,
-        response: Response,
-        username: str,
-        password: str,
-        db: Session = Depends(deps.get_db)
+    request: Request,
+    response: Response,
+    username: str,
+    password: str,
+    db: Session = Depends(deps.get_db),
 ):
     """
     Login endpoint: Verifies user credentials and sets user_id in session.
@@ -28,32 +30,34 @@ async def login(
     if not user:
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid username or password"
+            detail="Invalid username or password",
         )
     # Verify the password
     if not security.verify_password(password, user.hashed_password):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Invalid username or password"
+            detail="Invalid username or password",
         )
     # Set user_id in session
     request.session["user_id"] = user.id
     # Create JWT token
     access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(data={"sub": user.username}, expires_delta=access_token_expires)
+    access_token = create_access_token(
+        data={"sub": user.username}, expires_delta=access_token_expires
+    )
     # Return success message
     return JSONResponse(
-        content={"message": "Successfully logged in", "access_token": access_token, "token_type": "bearer"},
-        status_code=status.HTTP_200_OK
+        content={
+            "message": "Successfully logged in",
+            "access_token": access_token,
+            "token_type": "bearer",
+        },
+        status_code=status.HTTP_200_OK,
     )
 
 
 @router.post("/register", response_model=User)
-async def register(
-        *,
-        db: Session = Depends(deps.get_db),
-        user_in: UserCreate
-):
+async def register(*, db: Session = Depends(deps.get_db), user_in: UserCreate):
     # Check if user already exists
     existing_user = db.query(UserModel).filter(UserModel.email == user_in.email).first()
     if existing_user:
@@ -70,7 +74,7 @@ async def register(
         username=user_in.username,
         email=user_in.email,
         hashed_password=hashed_password,
-        organization_id = user_in.organization_id
+        organization_id=user_in.organization_id,
     )
 
     db.add(new_user)
@@ -88,6 +92,5 @@ async def logout(request: Request):
     request.session.clear()
 
     return JSONResponse(
-        content={"message": "Successfully logged out"},
-        status_code=status.HTTP_200_OK
+        content={"message": "Successfully logged out"}, status_code=status.HTTP_200_OK
     )

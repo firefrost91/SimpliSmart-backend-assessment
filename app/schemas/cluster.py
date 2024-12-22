@@ -1,5 +1,7 @@
-from pydantic import BaseModel
 from typing import Optional
+
+from pydantic import BaseModel
+
 
 class ClusterBase(BaseModel):
     name: str
@@ -7,11 +9,14 @@ class ClusterBase(BaseModel):
     ram_limit: float
     gpu_limit: float
 
+
 class ClusterCreate(ClusterBase):
     organization_id: int
 
+
 class ClusterUpdate(ClusterBase):
     pass
+
 
 class Cluster(ClusterBase):
     id: int

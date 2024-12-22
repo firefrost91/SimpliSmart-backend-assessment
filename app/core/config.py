@@ -1,5 +1,7 @@
-from pydantic_settings import BaseSettings
 import os
+
+from pydantic_settings import BaseSettings
+
 
 class Settings(BaseSettings):
     PROJECT_NAME: str = "Cluster Management API"
@@ -16,7 +18,7 @@ class Settings(BaseSettings):
     # app/core/config.py
 
     SECRET_KEY = "your-secret-key"
-    ALGORITHM: str = 'HS256'
+    ALGORITHM: str = "HS256"
     ACCESS_TOKEN_EXPIRE_MINUTES: int = 30
 
     SECRET_KEY: str = "TODO_CHANGE_THIS_SECRET_KEY"  # TODO: Change in production
@@ -26,11 +28,11 @@ class Settings(BaseSettings):
     # Database URL
     DATABASE_URL: str = os.getenv(
         "postgresql://ansh:password@localhost:5432/test_db",
-        f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}"
+        f"postgresql://{POSTGRES_USER}:{POSTGRES_PASSWORD}@{POSTGRES_SERVER}:{POSTGRES_PORT}/{POSTGRES_DB}",
     )
+
 
 settings = Settings()
 ACCESS_TOKEN_EXPIRE_MINUTES = settings.ACCESS_TOKEN_EXPIRE_MINUTES
 SECRET_KEY = settings.SECRET_KEY
 ALGORITHM = settings.ALGORITHM
-
