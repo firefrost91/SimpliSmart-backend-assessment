@@ -1,4 +1,4 @@
-# Simplismart backend assignment
+# HiveBox
 
 ## Overview
 
